@@ -1,4 +1,4 @@
-'''markdown
+```markdown
 # 🛣️ LaneFollower_WS
 
 ROS Noetic 기반 **차선 인식 → 경로 생성 → Pure-Pursuit 제어** 파이프라인입니다.  
@@ -23,7 +23,7 @@ lane_follower_ws/
 │ └── package.xml
 └── demo/
 └── lane_demo_offline.py # Matplotlib 데모 (ROS 미사용)
-'''
+```
 
 ---
 > `lane_demo_offline.py` 는 ROS 없이 비디오 파일을 읽어 **실시간 시각화**(차선·경로·Look-ahead·조향각 출력)를 확인할 때 사용합니다.
@@ -62,6 +62,24 @@ lane_follower_ws/
 
 ```bash
 cd ~/workspace/lane_follower_ws
-catkin_make
+catkin_make -DCMAKE_BUILD_TYPE=Release
 source devel/setup.bash
+```
+- 소스 수정 시 설치 디렉토리에 즉시 반영되도록 심볼릭 링크로 설치하고, 최적화 빌드를 통해 실행 성능을 높이기 위해 catkin_make -DCMAKE_BUILD_TYPE=Release 사용
 
+### 🚀 실행 예시
+
+```bash
+# 3-노드 전체 파이프라인
+roslaunch lane_follower lane_follower.launch
+
+# 개별 노드만 테스트하고 싶을 때
+rosrun lane_follower lane_detector.py           # 카메라 → 차선
+rosrun lane_follower path_planner.py            # 차선 → 경로
+rosrun lane_follower pure_pursuit_ctrl.py       # 경로 → 제어
+
+# 오프라인 Matplotlib 데모 (영상 파일 필요)
+python3 demo/lane_demo_offline.py --video trackrecord4_2x.mp4
+```
+
+### 🎥 데모 영상
