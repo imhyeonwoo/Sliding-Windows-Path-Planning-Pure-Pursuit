@@ -1,19 +1,21 @@
+'''markdown
 # 🛣️ LaneFollower_WS
 
 ROS Noetic 기반 **차선 인식 → 경로 생성 → Pure-Pursuit 제어** 파이프라인입니다.  
-건국대학교 2025-1 *Autonomous Vehicle Platform* 과제-연구를 위해 작성한 코드와 데모를 관리합니다.  
+건국대학교 2024-여름방학 *제3회 자율주행 SW 경진대회*를 위해 작성한 코드와 데모를 업로드합니다.  
 (Matplotlib 오프라인 검증 스크립트까지 함께 포함)
 
 ---
 
 ## 📁 프로젝트 구조
 
+
 lane_follower_ws/
 ├── src/
 │ └── lane_follower/
-│ ├── launch/ # 🔧 3-노드 런치 파일
+│ ├── launch/ #  3-노드 런치 파일
 │ │ └── lane_follower.launch
-│ ├── scripts/ # 🐍 Python 노드
+│ ├── scripts/ #  Python 노드
 │ │ ├── lane_detector.py # ① BEV + 차선 추출
 │ │ ├── path_planner.py # ② 경로/Look-ahead 계산
 │ │ └── pure_pursuit_ctrl.py # ③ 조향·스로틀 출력
