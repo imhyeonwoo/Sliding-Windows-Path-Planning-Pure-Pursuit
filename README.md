@@ -43,6 +43,7 @@ lane_follower_ws/
 * 우측 차선 기준 **차량 중심선** 함수 `P(x)` 계산  
 * Look-ahead 거리 `x_la` (기본 0.85 m) 지점의 목표 좌표 산출  
 * `/path/lookahead_point` 발행
+* 효율성을 위해 Pure-Pursuit 노드에서 ld가 아닌 x_ld를 설정하고 이를 사용하여 P'(x_ld)를 활용
 
 ### ✅ Pure-Pursuit 제어 (PurePursuitCtrl)
 * Look-ahead 점으로부터 조향각 계산  
