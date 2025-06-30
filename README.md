@@ -86,9 +86,9 @@ python3 demo/lane_demo_offline.py --video trackrecord4_2x.mp4
 
 👉 [데모 영상 다운로드 (MP4)](https://github.com/imhyeonwoo/Sliding-Windows-Path-Planning-Pure-Pursuit/raw/main/videos/demo_lane_follower.mp4)
 
-> 🔸 차선 인식 → 경로 생성 → Pure Pursuit 조향까지 전체 파이프라인 시연 영상입니다.
-
 [![Demo Video](./videos/demo_thumbnail.png)](https://github.com/imhyeonwoo/Sliding-Windows-Path-Planning-Pure-Pursuit/raw/main/videos/demo_lane_follower.mp4)
+
+> 🔸 슬라이딩 윈도우로 차선 인식 → 경로 생성 → Pure Pursuit 조향까지 전체 파이프라인 시연 영상입니다.
 
 ## 영상 설명
 - 파란·빨간 점 : 추출된 좌·우 차선 포인트
