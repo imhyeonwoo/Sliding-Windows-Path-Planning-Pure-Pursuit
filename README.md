@@ -57,6 +57,67 @@ lane_follower_ws/
 
 ---
 
+## 🔍 핵심 알고리즘 – Look Ahead Point와 Pure Pursuit
+
+이 프로젝트에서 경로 함수는 차선으로부터 추출됩니다.  
+Look Ahead Point는 차량의 현재 위치로부터 x 축으로 `x_la` 만큼 전방을 바라보는 점으로 설정합니다.  
+여기서 `x_la`는 Look Ahead Distance가 아니라 **Look Ahead x Position**입니다.
+
+---
+
+### 📐 Look Ahead Point 계산
+
+`x_la`는 전방 x 거리로 설정하며, 경로 함수 \( P(x) \) 에서 해당하는 y값을 찾습니다.  
+따라서 Look Ahead Point는:
+
+\[
+(x_{la}, y_{la})
+\]
+
+가 됩니다.
+
+---
+
+### 🚗 Pure Pursuit Steering 공식
+
+\[
+L_d^2 = (x_{la})^2 + (y_{la})^2
+\]
+
+\[
+\sin \alpha = \frac{y_{la}}{L_d}
+\]
+
+이를 이용해 조향각(δ)는 다음과 같이 계산합니다:
+
+\[
+\delta = \arctan\left(\frac{2 \cdot L \cdot \sin\alpha}{L_d}\right)
+\]
+
+이를 다시 정리하면:
+
+\[
+\delta = \arctan\left(\frac{2 \cdot L \cdot y_{la}}{(L_d)^2}\right) = \arctan\left(\frac{2 \cdot L \cdot y_{la}}{(x_{la})^2 + (y_{la})^2}\right)
+\]
+
+---
+
+| 변수 | 의미                         |
+|------|------------------------------|
+| \(L\) | 차량의 휠베이스 (wheelbase)  |
+| \(x_{la}\) | 전방 x 거리 (Look Ahead x) |
+| \(y_{la}\) | 경로 함수에서 대응되는 y 값 |
+| \(L_d\) | Look Ahead Distance |
+
+---
+
+### 🔥 핵심 포인트
+
+- **일반적인 Pure Pursuit는 Look Ahead Distance로 설정하지만**, 본 프로젝트에서는 Look Ahead X (\(x_{la}\))를 기준으로 정의합니다.
+- 이는 알고리즘의 효율성과 수치적 안정성을 높이기 위한 선택입니다.
+
+---
+
 ## ⚙️ 사용 방법
 
 ### 🔧 빌드 (ROS Noetic)
