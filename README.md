@@ -43,6 +43,7 @@ lane_follower_ws/
 * 우측 차선 기준 **차량 중심선** 함수 `P(x)` 계산  
 * Look-ahead 거리 `x_la` (기본 0.85 m) 지점의 목표 좌표 산출  
 * `/path/lookahead_point` 발행
+* 효율성을 위해 Pure-Pursuit 노드에서 ld가 아닌 x_ld를 설정하고 이를 사용하여 P'(x_ld)를 활용
 
 ### ✅ Pure-Pursuit 제어 (PurePursuitCtrl)
 * Look-ahead 점으로부터 조향각 계산  
@@ -53,6 +54,7 @@ lane_follower_ws/
 * `demo/lane_demo_offline.py`  
   * 비디오 → BEVㆍ차선ㆍ경로ㆍLook-ahead를 Figure 로 실시간 출력  
   * Pure-Pursuit 조향각을 콘솔에 표시해서 **ROS 없어도 알고리즘 검증 가능**
+
 
 ---
 
@@ -86,9 +88,9 @@ python3 demo/lane_demo_offline.py --video trackrecord4_2x.mp4
 
 👉 [데모 영상 다운로드 (MP4)](https://github.com/imhyeonwoo/Sliding-Windows-Path-Planning-Pure-Pursuit/raw/main/videos/demo_lane_follower.mp4)
 
-> 🔸 차선 인식 → 경로 생성 → Pure Pursuit 조향까지 전체 파이프라인 시연 영상입니다.
-
 [![Demo Video](./videos/demo_thumbnail.png)](https://github.com/imhyeonwoo/Sliding-Windows-Path-Planning-Pure-Pursuit/raw/main/videos/demo_lane_follower.mp4)
+
+> 🔸 슬라이딩 윈도우로 차선 인식 → 경로 생성 → Pure Pursuit 조향까지 전체 파이프라인 시연 영상입니다.
 
 ## 영상 설명
 - 파란·빨간 점 : 추출된 좌·우 차선 포인트
