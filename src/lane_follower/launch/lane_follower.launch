@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- ───────────────────────────────────────────────────────────────
+       1) 파라미터 (원하면 launch 시에 수정 가능)                     -->
+  <arg name="throttle"          default="0.8"   />
+  <arg name="wheel_base"        default="0.55"  />
+  <arg name="lookahead_dist"    default="0.85"  />
+  <arg name="shift_distance"    default="0.425"  />
+
+  <!-- ───────────────────────────────────────────────────────────────
+       2) Lane Detector – 카메라 이미지 → 차선 Poly-fit 계수         -->
+  <node pkg="lane_follower"
+        type="lane_detector.py"
+        name="lane_detector"
+        output="screen">
+    <!-- 파라미터 서버에 고정 값 등록 (원할 경우 노드 안에서 읽어 사용) -->
+    <param name="fixed_points"       value="[(10,450),(540,430),(435,240),(190,240)]" />
+    <param name="x_m_per_pixel"      value="0.0016472868217054263" />
+    <param name="y_m_per_pixel"      value="0.003703703703703704" />
+  </node>
+
+  <!-- ───────────────────────────────────────────────────────────────
+       3) Path Planner – 차선 → Look-ahead 점                        -->
+  <node pkg="lane_follower"
+        type="path_planner.py"
+        name="path_planner"
+        output="screen">
+    <param name="lookahead_dist" value="$(arg lookahead_dist)"   />
+    <param name="shift_distance" value="$(arg shift_distance)"   />
+  </node>
+
+  <!-- ───────────────────────────────────────────────────────────────
+       4) Pure-Pursuit Controller – Look-ahead → 스티어·스로틀       -->
+  <node pkg="lane_follower"
+        type="pure_pursuit_ctrl.py"
+        name="pure_pursuit_ctrl"
+        output="screen">
+    <param name="wheel_base" value="$(arg wheel_base)" />
+    <param name="throttle"   value="$(arg throttle)"   />
+  </node>
+
+</launch>

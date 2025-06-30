@@ -1,0 +1,20 @@
+# ROS build files
+build/
+devel/
+install/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# VSCode settings (optional)
+.vscode/
+
+# Videos or large data files (if you have)
+videos/
+
+# OS generated files
+.DS_Store
+Thumbs.db
