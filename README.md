@@ -82,4 +82,29 @@ rosrun lane_follower pure_pursuit_ctrl.py       # 경로 → 제어
 python3 demo/lane_demo_offline.py --video trackrecord4_2x.mp4
 ```
 
-### 🎥 데모 영상
+## 🎥 데모 영상
+
+👉 [데모 영상 다운로드 (MP4)](https://github.com/imhyeonwoo/Sliding-Windows-Path-Planning-Pure-Pursuit/raw/main/videos/demo_lane_follower.mp4)
+
+> 🔸 차선 인식 → 경로 생성 → Pure Pursuit 조향까지 전체 파이프라인 시연 영상입니다.
+
+[![Demo Video](./videos/demo_thumbnail.png)](https://github.com/imhyeonwoo/Sliding-Windows-Path-Planning-Pure-Pursuit/raw/main/videos/demo_lane_follower.mp4)
+
+## 영상 설명
+- 파란·빨간 점 : 추출된 좌·우 차선 포인트
+- 파란/빨간 선 : Poly-fit 차선
+- 주황색 선 : 차량 중심 경로 P(x)
+- 초록 원 : Look-ahead 점 (0.85 m)
+- 콘솔 로그 : 실시간 조향각(°) 출력
+
+## 🛠️ 개발 환경
+
+| 항목            | 버전/도구               |
+|-----------------|------------------------|
+| OS              | Ubuntu 20.04 LTS           |
+| ROS             | ROS1 Noetic            |
+| 언어            | Python 3.8 / C++14    |
+| 라이브러리            | OpenCV 4.9, NumPy, Matplotlib    |
+
+---
+
