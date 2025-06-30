@@ -13,7 +13,7 @@ __pycache__/
 .vscode/
 
 # Videos or large data files (if you have)
-videos/
+# videos/
 
 # OS generated files
 .DS_Store
