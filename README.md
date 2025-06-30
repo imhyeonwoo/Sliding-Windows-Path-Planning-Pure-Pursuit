@@ -55,6 +55,21 @@ lane_follower_ws/
   * 비디오 → BEVㆍ차선ㆍ경로ㆍLook-ahead를 Figure 로 실시간 출력  
   * Pure-Pursuit 조향각을 콘솔에 표시해서 **ROS 없어도 알고리즘 검증 가능**
 
+---
+
+## 🧠 핵심 알고리즘 – Calculate Steering Angle
+
+아래는 Pure Pursuit에서 Look Ahead Point를 기반으로 조향각을 계산하는 과정입니다.
+
+![Steering Angle Formula](./docs/steering_formula.png)
+
+---
+
+## 🔀 경로 함수의 평행이동 – Path Shift
+
+차선 함수의 기울기와 법선 벡터를 기반으로 차량이 따라야 할 경로 함수를 평행이동시킵니다.
+
+![Path Shift Explanation](./docs/path_shift.png)
 
 ---
 
