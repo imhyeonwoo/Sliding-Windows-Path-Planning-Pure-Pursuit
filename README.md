@@ -1,4 +1,3 @@
-```markdown
 # 🛣️ LaneFollower_WS
 
 A **lane detection → path generation → Pure-Pursuit control** pipeline based on ROS Noetic.  
@@ -6,6 +5,7 @@ This repository contains the code and demo for the *3rd Autonomous Driving Softw
 (Includes offline verification scripts using Matplotlib.)
 
 ---
+```markdown
 
 ## 📁 Project Structure
 
