@@ -1,127 +1,127 @@
 ```markdown
 # 🛣️ LaneFollower_WS
 
-ROS Noetic 기반 **차선 인식 → 경로 생성 → Pure-Pursuit 제어** 파이프라인입니다.  
-건국대학교 2024-여름방학 *제3회 자율주행 SW 경진대회*를 위해 작성한 코드와 데모를 업로드합니다.  
-(Matplotlib 오프라인 검증 스크립트까지 함께 포함)
+A **lane detection → path generation → Pure-Pursuit control** pipeline based on ROS Noetic.  
+This repository contains the code and demo for the *3rd Autonomous Driving Software Competition* during the 2024 summer vacation at Konkuk University.  
+(Includes offline verification scripts using Matplotlib.)
 
 ---
 
-## 📁 프로젝트 구조
+## 📁 Project Structure
 
 
 lane_follower_ws/
 ├── src/
 │ └── lane_follower/
-│ ├── launch/ #  3-노드 런치 파일
+│ ├── launch/ #  3-node launch file
 │ │ └── lane_follower.launch
-│ ├── scripts/ #  Python 노드
-│ │ ├── lane_detector.py # ① BEV + 차선 추출
-│ │ ├── path_planner.py # ② 경로/Look-ahead 계산
-│ │ └── pure_pursuit_ctrl.py # ③ 조향·스로틀 출력
+│ ├── scripts/ #  Python nodes
+│ │ ├── lane_detector.py # ① BEV +  lane data extraction
+│ │ ├── path_planner.py # ② Path and look-ahead point calculation
+│ │ └── pure_pursuit_ctrl.py # ③ Steering and throttle output
 │ ├── CMakeLists.txt
 │ └── package.xml
 └── demo/
-└── lane_demo_offline.py # Matplotlib 데모 (ROS 미사용)
+└── lane_demo_offline.py # Matplotlib demo (no ROS required)
 ```
 
 ---
-> `lane_demo_offline.py` 는 ROS 없이 비디오 파일을 읽어 **실시간 시각화**(차선·경로·Look-ahead·조향각 출력)를 확인할 때 사용합니다.
+> `lane_demo_offline.py` reads a video file and performs **real-time visualization** of the lane, path, look-ahead point, and steering angle **without ROS**.
 
 ---
 
-## 🚀 주요 기능
+## 🚀 Main Features
 
-### ✅ 차선 인식 (LaneDetector)
-* Bird-Eye 변환 & HLS Color Mask  
-* 원형 오브젝트(신호등·표지판) 제거  
-* 히스토그램 + 슬라이딩 윈도우로 좌/우 차선 픽셀 수집  
-* **좌(1차)/우(3차) Poly-fit** 계수 `/lane/*_fit` 토픽 발행  
-* BEV & 디버그 이미지 `/car/*_image` 토픽 발행
+### ✅ Lane Detection (LaneDetector)
+* Bird's-eye view transformation & HLS color masking  
+* Removes circular objects (traffic lights, signs, flower markers)  
+* Uses histogram + sliding window to detect left/right lane pixels  
+* Publishes **left (1st-order) / right (3rd-order) poly-fit coefficients** on `/lane/*_fit` topics  
+* Publishes BEV & debug images on `/car/*_image` topics  
 
-### ✅ 경로 생성 (PathPlanner)
-* 우측 차선 기준 **차량 중심선** 함수 `P(x)` 계산  
-* Look-ahead 거리 `x_la` (기본 0.85 m) 지점의 목표 좌표 산출  
-* `/path/lookahead_point` 발행
-* 효율성을 위해 Pure-Pursuit 노드에서 ld가 아닌 x_ld를 설정하고 이를 사용하여 P'(x_ld)를 활용
+### ✅ Path Generation (PathPlanner)
+* Calculates the **vehicle center path function** `P(x)` based on the right lane  
+* Computes target coordinates at look-ahead distance `x_la` (default 0.85 m)  
+* Publishes `/path/lookahead_point`  
+* For efficiency, sets `x_ld` instead of ld in the Pure-Pursuit node and uses `P'(x_ld)` during calculation  
 
-### ✅ Pure-Pursuit 제어 (PurePursuitCtrl)
-* Look-ahead 점으로부터 조향각 계산  
-* 스로틀 0.8 (흔들림 확인용 상수) 발행  
-* `/car/steering`, `/car/throttle` 토픽 사용
+### ✅ Pure-Pursuit Control (PurePursuitCtrl)
+* Calculates steering angle based on the look-ahead point  
+* Publishes throttle (fixed at 0.8 to observe lateral motion clearly)  
+* Uses `/car/steering` and `/car/throttle` topics 
 
-### ✅ 오프라인 Matplotlib 데모
+### ✅ Offline Matplotlib Demo
 * `demo/lane_demo_offline.py`  
-  * 비디오 → BEVㆍ차선ㆍ경로ㆍLook-ahead를 Figure 로 실시간 출력  
-  * Pure-Pursuit 조향각을 콘솔에 표시해서 **ROS 없어도 알고리즘 검증 가능**
+  * Reads a video → displays BEV, lane, path, and look-ahead point in a matplotlib figure in real-time  
+  * Prints Pure-Pursuit steering angles to the console → **algorithm verification without ROS**
 
 ---
 
-## 🧠 핵심 알고리즘 – Calculate Steering Angle
+## 🧠 Core Algorithm – Calculate Steering Angle
 
-아래는 Pure Pursuit에서 Look Ahead Point를 기반으로 조향각을 계산하는 과정입니다.
+The following describes the process of calculating the steering angle from the look-ahead point in Pure Pursuit.
 
 ![Steering Angle Formula](./docs/steering_formula.png)
 
 ---
 
-## 🔀 경로 함수의 평행이동 – Path Shift
+## 🔀 Path Shifting – Path Shift
 
-차선 함수의 기울기와 법선 벡터를 기반으로 차량이 따라야 할 경로 함수를 평행이동시킵니다.
+The target path is shifted based on the slope of the detected lane function and its normal vector to align with the vehicle's centerline.
 
 ![Path Shift Explanation](./docs/path_shift.png)
 
 ---
 
-## ⚙️ 사용 방법
+## ⚙️ How to Use
 
-### 🔧 빌드 (ROS Noetic)
+### 🔧 Build (ROS Noetic)
 
 ```bash
 cd ~/workspace/lane_follower_ws
 catkin_make -DCMAKE_BUILD_TYPE=Release
 source devel/setup.bash
 ```
-- 소스 수정 시 설치 디렉토리에 즉시 반영되도록 심볼릭 링크로 설치하고, 최적화 빌드를 통해 실행 성능을 높이기 위해 catkin_make -DCMAKE_BUILD_TYPE=Release 사용
+- catkin_make -DCMAKE_BUILD_TYPE=Release builds the project with optimization enabled for better runtime performance and reflects source code changes immediately.
 
-### 🚀 실행 예시
+### 🚀 Example Execution
 
 ```bash
-# 3-노드 전체 파이프라인
+# Full 3-node pipeline
 roslaunch lane_follower lane_follower.launch
 
-# 개별 노드만 테스트하고 싶을 때
-rosrun lane_follower lane_detector.py           # 카메라 → 차선
-rosrun lane_follower path_planner.py            # 차선 → 경로
-rosrun lane_follower pure_pursuit_ctrl.py       # 경로 → 제어
+# Test individual nodes
+rosrun lane_follower lane_detector.py           # Camera → Lane detection
+rosrun lane_follower path_planner.py            # Lane → Path generation
+rosrun lane_follower pure_pursuit_ctrl.py       # Path → Control
 
-# 오프라인 Matplotlib 데모 (영상 파일 필요)
+# Offline Matplotlib demo (requires video file)
 python3 demo/lane_demo_offline.py --video trackrecord4_2x.mp4
 ```
 
-## 🎥 데모 영상
+## 🎥 Demo Video
 
-👉 [데모 영상 다운로드 (MP4)](https://github.com/imhyeonwoo/Sliding-Windows-Path-Planning-Pure-Pursuit/raw/main/videos/demo_lane_follower.mp4)
+👉 [Download Demo Video (MP4)](https://github.com/imhyeonwoo/Sliding-Windows-Path-Planning-Pure-Pursuit/raw/main/videos/demo_lane_follower.mp4)
 
 [![Demo Video](./videos/demo_thumbnail.png)](https://github.com/imhyeonwoo/Sliding-Windows-Path-Planning-Pure-Pursuit/raw/main/videos/demo_lane_follower.mp4)
 
-> 🔸 슬라이딩 윈도우로 차선 인식 → 경로 생성 → Pure Pursuit 조향까지 전체 파이프라인 시연 영상입니다.
+> 🔸  This demo video shows the full pipeline from lane detection using sliding windows → path generation → Pure Pursuit steering control.
 
-## 영상 설명
-- 파란·빨간 점 : 추출된 좌·우 차선 포인트
-- 파란/빨간 선 : Poly-fit 차선
-- 주황색 선 : 차량 중심 경로 P(x)
-- 초록 원 : Look-ahead 점 (0.85 m)
-- 콘솔 로그 : 실시간 조향각(°) 출력
+## Video Explanation
+- Blue/Red dots: Detected left/right lane points
+- Blue/Red curves: Poly-fitted lanes
+- Orange curve: Vehicle center path P(x)
+- Green circle: Look-ahead point (x = 0.85 m)
+- Console log: Real-time steering angle output (°)
 
-## 🛠️ 개발 환경
+## 🛠️ Development Environment
 
 | 항목            | 버전/도구               |
 |-----------------|------------------------|
 | OS              | Ubuntu 20.04 LTS           |
 | ROS             | ROS1 Noetic            |
-| 언어            | Python 3.8 / C++14    |
-| 라이브러리            | OpenCV 4.9, NumPy, Matplotlib    |
+| Programming Lang	            | Python 3.8 / C++14    |
+| Libraries            | OpenCV 4.9, NumPy, Matplotlib    |
 
 ---
 
