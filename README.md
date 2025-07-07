@@ -63,6 +63,8 @@ The following describes the process of calculating the steering angle from the l
 
 ![Steering Angle Formula](./docs/steering_formula.png)
 
+- Accordingly, in sections with high curvature, y_la  decreases while x_la remains constant, resulting in a shorter look-ahead distance.
+- This enables the successful implementation of a dynamic look-ahead distance that adjusts according to the curvature of the road.
 ---
 
 ## 🔀 Path Shifting – Path Shift
