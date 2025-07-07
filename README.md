@@ -110,10 +110,10 @@ python3 demo/lane_demo_offline.py --video trackrecord4_2x.mp4
 > 🔸  This demo video shows the full pipeline from lane detection using sliding windows → path generation → Pure Pursuit steering control.
 
 ## Video Explanation
-- Blue/Red dots: Detected left/right lane points
+- Blue/Red dots: Detected left/right lane points using Sliding-Windows
 - Blue/Red curves: Poly-fitted lanes
-- Orange curve: Vehicle center path P(x)
-- Green circle: Look-ahead point (x = 0.85 m)
+- Yellow curve: Vehicle center path P(x)
+- Green circle: Look-ahead point (x_la = 0.85 m, y_la = P(x_la))
 - Console log: Real-time steering angle output (°)
 
 ## 🛠️ Development Environment
