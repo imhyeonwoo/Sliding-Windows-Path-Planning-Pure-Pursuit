@@ -116,7 +116,7 @@ python3 demo/lane_demo_offline.py --video trackrecord4_2x.mp4
 
 ## 🛠️ Development Environment
 
-| 항목            | 버전/도구               |
+| Item            | Version/Tool             |
 |-----------------|------------------------|
 | OS              | Ubuntu 20.04 LTS           |
 | ROS             | ROS1 Noetic            |
