@@ -7,7 +7,7 @@ This repository contains the code and demo for the *3rd Autonomous Driving Softw
 ---
 ```markdown
 
-## 📁 Project Structure
+## Project Structure
 
 
 lane_follower_ws/
@@ -30,34 +30,34 @@ lane_follower_ws/
 
 ---
 
-## 🚀 Main Features
+## Main Features
 
-### ✅ Lane Detection (LaneDetector)
+### (1) Lane Detection (LaneDetector)
 * Bird's-eye view transformation & HLS color masking  
 * Removes circular objects (traffic lights, signs, flower markers)  
 * Uses histogram + sliding window to detect left/right lane pixels  
 * Publishes **left (1st-order) / right (3rd-order) poly-fit coefficients** on `/lane/*_fit` topics  
 * Publishes BEV & debug images on `/car/*_image` topics  
 
-### ✅ Path Generation (PathPlanner)
+### (2) Path Generation (PathPlanner)
 * Calculates the **vehicle center path function** `P(x)` based on the right lane  
 * Computes target coordinates at look-ahead distance `x_la` (default 0.85 m)  
 * Publishes `/path/lookahead_point`  
 * For efficiency, sets `x_ld` instead of ld in the Pure-Pursuit node and uses `P'(x_ld)` during calculation  
 
-### ✅ Pure-Pursuit Control (PurePursuitCtrl)
+### (3) Pure-Pursuit Control (PurePursuitCtrl)
 * Calculates steering angle based on the look-ahead point  
 * Publishes throttle (fixed at 0.8 to observe lateral motion clearly)  
 * Uses `/car/steering` and `/car/throttle` topics 
 
-### ✅ Offline Matplotlib Demo
+### (4) Offline Matplotlib Demo
 * `demo/lane_demo_offline.py`  
   * Reads a video → displays BEV, lane, path, and look-ahead point in a matplotlib figure in real-time  
   * Prints Pure-Pursuit steering angles to the console → **algorithm verification without ROS**
 
 ---
 
-## 🧠 Core Algorithm – Calculate Steering Angle
+##  Core Algorithm – Calculate Steering Angle
 
 The following describes the process of calculating the steering angle from the look-ahead point in Pure Pursuit.
 
@@ -67,7 +67,7 @@ The following describes the process of calculating the steering angle from the l
 - This enables the successful implementation of a dynamic look-ahead distance that adjusts according to the curvature of the road.
 ---
 
-## 🔀 Path Shifting – Path Shift
+##  Path Shifting – Path Shift
 
 The target path is shifted based on the slope of the detected lane function and its normal vector to align with the vehicle's centerline.
 
@@ -75,9 +75,9 @@ The target path is shifted based on the slope of the detected lane function and 
 
 ---
 
-## ⚙️ How to Use
+## ⚙ How to Use
 
-### 🔧 Build (ROS Noetic)
+###  Build (ROS Noetic)
 
 ```bash
 cd ~/workspace/lane_follower_ws
@@ -86,7 +86,7 @@ source devel/setup.bash
 ```
 - catkin_make -DCMAKE_BUILD_TYPE=Release builds the project with optimization enabled for better runtime performance and reflects source code changes immediately.
 
-### 🚀 Example Execution
+###  Example Execution
 
 ```bash
 # Full 3-node pipeline
@@ -101,13 +101,13 @@ rosrun lane_follower pure_pursuit_ctrl.py       # Path → Control
 python3 demo/lane_demo_offline.py --video trackrecord4_2x.mp4
 ```
 
-## 🎥 Demo Video
+##  Demo Video
 
-👉 [Download Demo Video (MP4)](https://github.com/imhyeonwoo/Sliding-Windows-Path-Planning-Pure-Pursuit/raw/main/videos/demo_lane_follower.mp4)
+[Download Demo Video (MP4)](https://github.com/imhyeonwoo/Sliding-Windows-Path-Planning-Pure-Pursuit/raw/main/videos/demo_lane_follower.mp4)
 
 [![Demo Video](./videos/demo_thumbnail.png)](https://github.com/imhyeonwoo/Sliding-Windows-Path-Planning-Pure-Pursuit/raw/main/videos/demo_lane_follower.mp4)
 
-> 🔸  This demo video shows the full pipeline from lane detection using sliding windows → path generation → Pure Pursuit steering control.
+>   This demo video shows the full pipeline from lane detection using sliding windows → path generation → Pure Pursuit steering control.
 
 ## Video Explanation
 - Blue/Red dots: Detected left/right lane points using Sliding-Windows
@@ -116,7 +116,7 @@ python3 demo/lane_demo_offline.py --video trackrecord4_2x.mp4
 - Green circle: Look-ahead point (x_la = 0.85 m, y_la = P(x_la))
 - Console log: Real-time steering angle output (°)
 
-## 🛠️ Development Environment
+##  Development Environment
 
 | Item            | Version/Tool             |
 |-----------------|------------------------|
