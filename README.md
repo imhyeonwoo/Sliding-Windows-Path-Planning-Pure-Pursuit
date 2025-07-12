@@ -1,4 +1,4 @@
-# 🛣️ LaneFollower_WS
+#  LaneFollower_WS
 
 A **lane detection → path generation → Pure-Pursuit control** pipeline based on ROS Noetic.  
 This repository contains the code and demo for the *3rd Autonomous Driving Software Competition(제3회 미래형자동차 자율주행 SW 경진대회)* during the 2024 summer vacation at Konkuk University.  
@@ -75,7 +75,7 @@ The target path is shifted based on the slope of the detected lane function and 
 
 ---
 
-## ⚙ How to Use
+##  How to Use
 
 ###  Build (ROS Noetic)
 
