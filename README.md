@@ -67,7 +67,7 @@ The following describes the process of calculating the steering angle from the l
 - This enables the successful implementation of a dynamic look-ahead distance that adjusts according to the curvature of the road.
 ---
 
-##  Path Shifting – Path Shift
+##  Path Planning(Shifting) – Path Shift
 
 The target path is shifted based on the slope of the detected lane function and its normal vector to align with the vehicle's centerline.
 
