@@ -103,18 +103,24 @@ python3 demo/lane_demo_offline.py --video trackrecord4_2x.mp4
 
 ##  Demo Video
 
-[Download Demo Video (MP4)](https://github.com/imhyeonwoo/Sliding-Windows-Path-Planning-Pure-Pursuit/raw/main/videos/demo_lane_follower.mp4)
+<p align="center">
+  <img src="docs/lane follower visualization.gif" width="70%"/><br>
+  <span style="font-size:20px; font-weight:bold;">Lane Follower Visualization</span>
+</p>
 
-[![Demo Video](./videos/demo_thumbnail.png)](https://github.com/imhyeonwoo/Sliding-Windows-Path-Planning-Pure-Pursuit/raw/main/videos/demo_lane_follower.mp4)
+<p>
+  This GIF visualizes the <b>Lane Detection–Path Generation–Pure Pursuit Control Pipeline</b>. 
+  The pipeline integrates <i>sliding window–based lane detection</i>, <i>polynomial path fitting</i>, 
+  and <b>Pure Pursuit steering control</b> to demonstrate end-to-end autonomous path tracking.
+</p>
 
->   This demo video shows the full pipeline from lane detection using sliding windows → path generation → Pure Pursuit steering control.
-
-## Video Explanation
-- Blue/Red dots: Detected left/right lane points using Sliding-Windows
-- Blue/Red curves: Poly-fitted lanes
-- Yellow curve: Vehicle center path P(x)
-- Green circle: Look-ahead point (x_la = 0.85 m, y_la = P(x_la))
-- Console log: Real-time steering angle output (°)
+<ul>
+  <li><b>Blue/Red Dots:</b> Detected left/right lane points using the Sliding Window method</li>
+  <li><b>Blue/Red Curves:</b> Polynomial-fitted lane boundaries</li>
+  <li><b>Yellow Curve:</b> Vehicle center path function P(x)</li>
+  <li><b>Green Circle:</b> Look-ahead point (x<sub>la</sub> = 0.85 m, y<sub>la</sub> = P(x<sub>la</sub>))</li>
+  <li><b>Console Log:</b> Real-time steering angle output (°)</li>
+</ul>
 
 ##  Development Environment
 
