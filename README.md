@@ -61,7 +61,9 @@ lane_follower_ws/
 
 The following describes the process of calculating the steering angle from the look-ahead point in Pure Pursuit.
 
-![Steering Angle Formula](./docs/steering_formula.png)
+<p align="left">
+  <img src="./docs/steering_formula.png" alt="Steering Angle Formula" width="40%">
+</p>
 
 - Accordingly, in sections with high curvature, y_la  decreases while x_la remains constant, resulting in a shorter look-ahead distance.
 - This enables the successful implementation of a dynamic look-ahead distance that adjusts according to the curvature of the road.
@@ -70,8 +72,9 @@ The following describes the process of calculating the steering angle from the l
 ##  Path Planning(Shifting) – Path Shift
 
 The target path is shifted based on the slope of the detected lane function and its normal vector to align with the vehicle's centerline.
-
-![Path Shift Explanation](./docs/path_shift.png)
+<p align="left">
+  <img src="./docs/path_shift.png" alt="Steering Angle Formula" width="40%">
+</p>
 
 ---
 
@@ -104,7 +107,7 @@ python3 demo/lane_demo_offline.py --video trackrecord4_2x.mp4
 ##  Demo Video
 
 <p align="center">
-  <img src="docs/lane follower visualization.gif" width="70%"/><br>
+  <img src="docs/lane follower visualization.gif" width="60%"/><br>
   <span style="font-size:20px; font-weight:bold;">Lane Follower Visualization</span>
 </p>
 
@@ -121,6 +124,23 @@ python3 demo/lane_demo_offline.py --video trackrecord4_2x.mp4
   <li><b>Green Circle:</b> Look-ahead point (x<sub>la</sub> = 0.85 m, y<sub>la</sub> = P(x<sub>la</sub>))</li>
   <li><b>Console Log:</b> Real-time steering angle output (°)</li>
 </ul>
+
+---
+
+## Competition Driving Video(Autonomous Driving Contest)
+
+<p align="center">
+  <a href="https://youtube.com/clip/UgkxNZubT0VH2hOiWcrRdQH99bJ-Ug2KoYz8?si=8aaSRhOMkMg-p0qD">
+    <img src="https://github.com/imhyeonwoo/Sliding-Windows-Path-Planning-Pure-Pursuit/blob/main/docs/doldol_car.png?raw=true" width="500"/>
+  </a>
+</p>
+
+<p align="center">
+  CLICK THE IMAGE above to watch the driving demo on YouTube.
+</p>
+
+This video shows the **real vehicle developed and driven by our team**  
+during the **3rd Autonomous Driving Software Competition (2024)**.
 
 ##  Development Environment
 
