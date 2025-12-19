@@ -61,9 +61,18 @@ lane_follower_ws/
 
 The following describes the process of calculating the steering angle from the look-ahead point in Pure Pursuit.
 
-<p align="left">
-  <img src="./docs/steering_formula.png" alt="Steering Angle Formula" width="40%">
-</p>
+### How to Set Look Ahead Point?
+$L_d$를 사용하여 Look Ahead Point를 설정할 수도 있지만 알고리즘의 효율성을 위해 $L_d$가 parameter가 아닌 $x_{la}$를 parameter로 설정하였다. $x_{la}$는 look ahead $x$이고, 이는 전방 몇 meter를 바라볼건지를 뜻하는 변수이다.
+
+$x_{la}$를 고정값으로 설정하면 경로함수 $P(x)$에 대응되는 $y$값이 존재할 것이고, 이 때 $y$값을 $y_{la}$로 설정하면 좌표 $(x_{la}, y_{la})$가 Look Ahead Point가 되는 것이다.
+
+이후 이 점을 사용하여 Pure Pursuit 공식을 재정의하였다.
+
+$(L_d)^2 = (x_{la})^2 + (y_{la})^2$
+
+$\sin \alpha = \frac{y_{la}}{L_d}$
+
+$\therefore \delta = \arctan\left(\frac{2 \cdot L \cdot \sin \alpha}{L_d}\right) = \arctan\left(\frac{2 \cdot L \cdot y_{la}}{(L_d)^2}\right) = \arctan\left(\frac{2 \cdot L \cdot y_{la}}{(x_{la})^2 + (y_{la})^2}\right)$
 
 - Accordingly, in sections with high curvature, y_la  decreases while x_la remains constant, resulting in a shorter look-ahead distance.
 - This enables the successful implementation of a dynamic look-ahead distance that adjusts according to the curvature of the road.
@@ -72,9 +81,14 @@ The following describes the process of calculating the steering angle from the l
 ##  Path Planning(Shifting) – Path Shift
 
 The target path is shifted based on the slope of the detected lane function and its normal vector to align with the vehicle's centerline.
-<p align="left">
-  <img src="./docs/path_shift.png" alt="Steering Angle Formula" width="40%">
+
+<p align="middle">
+  <img src="./docs/path_shift_image.png" alt="Steering Angle Formula" width="80%">
 </p>
+
+Transcribed Content: 오른쪽 차선함수(Right Lane Polynomial)를 $y = R(x)$라고 했을 때, $R'(x_{la}) = \tan(\theta)$이고 이 접선의 법선 방향으로 real_shift_distance만큼 평행이동시키는 것이다.
+
+이에 따라 $x$ 방향으로 $-shift_{real distance} \cdot \cos(\theta)$, $y$ 방향으로 $+shift_{real distance} \cdot \sin(\theta)$ 만큼 평행이동 시킨 함수가 추종해야할 차선함수(Path Polynomial) $P(x)$가 되는 것이다.
 
 ---
 
